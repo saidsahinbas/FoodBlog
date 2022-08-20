@@ -1,0 +1,201 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<lang> lang
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Foodeiblog Template">
+    <meta name="keywords" content="Foodeiblog, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Foodeiblog | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Unna:400,700&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/style.css" type="text/css">
+</head>
+<body>
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2 col-md-1 col-6 order-md-1 order-1">
+                        <div class="header__humberger">
+                            <i class="fa fa-bars humberger__open"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-10 order-md-2 order-3">
+                        <nav class="header__menu">
+                            <ul>
+                                <li><a asp-controller="Home" asp-action="Index">@lang["Home"]</a></li>
+                                <li><a asp-controller="Recipe" asp-action="Index">@lang["Recipes"]</a></li>
+                                @*<li><a href="#">@lang["Dinner"]</a></li>
+                                <li><a href="#">@lang["Desserts"]</a></li>*@
+
+                                <li><a asp-controller="About" asp-action="Index">@lang["About"]</a></li>
+                                <li><a asp-controller="Contact" asp-action="Index">@lang["Contact"]</a></li>
+                                
+                                @if (User.IsInRole("Uye") || User.IsInRole("Admin"))
+                                {
+                                    <li><a asp-controller="Comment" asp-action="Index">@lang["Comment"]</a></li>
+                                    <li><a asp-controller="Post" asp-action="Index">@lang["Post"]</a></li>
+                                }
+                                @if(User.IsInRole("Admin")){
+                                    
+                                    <li><a asp-controller="Category" asp-action="Index">@lang["Category"]</a></li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-lg-2 col-md-1 col-6 order-md-3 order-2">
+                        <a type="button" class="btn btn-outline-warning" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="en-US">
+                            English
+                        </a>
+                        <a type="button" class="btn btn-outline-warning" asp-area="" asp-controller="Home" asp-action="Index" asp-route-culture="tr-TR">
+                            Türkçe
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__btn">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <a type="button" class="btn btn-outline-warning" asp-area="Identity" asp-page="/Account/Login">
+                                Login
+                            </a>
+                            <a type="button" class="btn btn-outline-warning" asp-area="Identity" asp-page="/Account/Register">
+                                Register
+                            </a>
+                        }
+                        @if(User.Identity.IsAuthenticated){
+                            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })">
+                                        <button type="submit" class="btn btn-outline-dark" id="button">
+                                            Logout
+                                        </button>
+                                    </form>
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="header__logo">
+                        <a asp-controller="Home" asp-action="Index"><img src="lib/bootstrap/dist/img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="header__social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-envelope-o"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="footer__instagram">
+                <div class="footer__instagram__avatar">
+                    <div class="footer__instagram__avatar--pic">
+                        <img src="lib/bootstrap/dist/img/footer/instagram-avatar.jpg" alt="">
+                    </div>
+                    <div class="footer__instagram__avatar--text">
+                        <h5>Food Blog</h5>
+                        <span>16,7k follower</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-6">
+                        <div class="footer__instagram__item set-bg" data-setbg="lib/bootstrap/dist/img/footer/ip-1.jpg"></div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-6">
+                        <div class="footer__instagram__item set-bg" data-setbg="lib/bootstrap/dist/img/footer/ip-2.jpg"></div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-6">
+                        <div class="footer__instagram__item set-bg" data-setbg="lib/bootstrap/dist/img/footer/ip-3.jpg"></div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-6">
+                        <div class="footer__instagram__item set-bg" data-setbg="lib/bootstrap/dist/img/footer/ip-4.jpg"></div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-6">
+                        <div class="footer__instagram__item set-bg" data-setbg="lib/bootstrap/dist/img/footer/ip-5.jpg"></div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-6">
+                        <div class="footer__instagram__item set-bg" data-setbg="lib/bootstrap/dist/img/footer/ip-6.jpg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__text">
+                        <div class="footer__logo">
+                            <a asp-controller="Home" asp-action="Index"><img src="lib/bootstrap/dist/img/logo.png" alt=""></a>
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                            ut<br /> labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus
+                            commodo viverra<br /> maecenas accumsan lacus vel facilisis.
+                        </p>
+                        <div class="footer__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            <a href="#"><i class="fa fa-envelope-o"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer__copyright">
+                        <p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+    <!-- Js Plugins -->
+    <script src="lib/bootstrap/dist/js/jquery-3.3.1.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="lib/bootstrap/dist/js/jquery.slicknav.js"></script>
+    <script src="lib/bootstrap/dist/js/owl.carousel.min.js"></script>
+    <script src="lib/bootstrap/dist/js/main.js"></script>
+</body>
+</html>
